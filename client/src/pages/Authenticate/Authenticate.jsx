@@ -17,7 +17,9 @@ function Authenticate() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3001/api/v1/user/authenticate', formData);
+            const response = await axios.post('http://localhost:3001/api/v1/user/authenticate', formData, {
+                withCredentials: true,
+            });
             console.log(response.data);
         } catch (error) {
             console.error('Authenticate failed:', error);
@@ -26,8 +28,8 @@ function Authenticate() {
 
     return (
         <form onSubmit={handleSubmit} className={style.wrapper}>
-            <TextField type="email" name="email" label="Enter Email..." value={formData.email} onChange={handleInputChange} required />
-            <TextField type="password" name="password" label="Enter Password..." value={formData.password} onChange={handleInputChange} required />
+            <TextField fullWidth type="email" name="email" label="Enter Email..." value={formData.email} onChange={handleInputChange} required />
+            <TextField fullWidth type="password" name="password" label="Enter Password..." value={formData.password} onChange={handleInputChange} required />
             <Button variant="contained" type="submit">Authenticate</Button>
         </form>
     );

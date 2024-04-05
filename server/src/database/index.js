@@ -1,4 +1,4 @@
-import { connect, Schema, model } from 'mongoose';
+import { connect, Schema, model, Types } from 'mongoose';
 import { MONGO_URI } from '../config/index.js';
 
 connect(MONGO_URI, {
@@ -17,5 +17,6 @@ const userSchema = new Schema({
 });
 
 const User = model('User', userSchema);
+const ObjectId = Types.ObjectId;
 
-export { User }
+export { User, ObjectId }

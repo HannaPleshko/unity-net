@@ -4,6 +4,7 @@ import multer, { diskStorage } from 'multer';
 import { extname } from 'path';
 import { SuccessfulType } from '../exceptions/exceptions.type.js';
 import { buildResponse } from '../helper/response.js';
+import { createToken } from '../helper/jwt.js';
 
 const route = Router()
 
@@ -29,7 +30,15 @@ route.post('/registrate', upload.single('profileImage'), async (req, res, next) 
 
 route.post('/authenticate', async (req, res, next) => {
     try {
-        await authenticateUser(req.body)
+        const foundUser = await authenticateUser(req.body)
+
+        const tokenData = createToken(foundUser);
+
+        res.cookie('Bearer: ', tokenData.token, {
+            httpOnly: false,
+            secure: true,
+        });
+
         buildResponse(res, 201, SuccessfulType.DB_USER_SUCCESS_AUTHENTICATE)
     } catch (error) {
         next(error)

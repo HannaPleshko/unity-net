@@ -1,12 +1,15 @@
-import { User } from './index.js';
+import { User, ObjectId } from './index.js';
 
 async function createUserDB(user) {
     await User.create(user);
 }
 
 async function getByEmail(email) {
-    console.log(email);
     return await User.findOne({ email });
+}
+
+async function getUserByIdDB(_id) {
+    return await User.findOne({ _id: new ObjectId(_id) });
 }
 
 async function getUsersDB() {
@@ -21,4 +24,4 @@ async function updateUserDB(_id, user) {
     await User.updateOne({ _id: new ObjectId(_id) }, user);
 }
 
-export { createUserDB, getByEmail, getUsersDB, deleteUserDB, updateUserDB }
+export { createUserDB, getByEmail, getUsersDB, deleteUserDB, updateUserDB, getUserByIdDB }
